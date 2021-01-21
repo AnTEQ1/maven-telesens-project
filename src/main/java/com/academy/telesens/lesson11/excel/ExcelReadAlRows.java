@@ -17,7 +17,7 @@ public class ExcelReadAlRows {
             Workbook workbook = new XSSFWorkbook(fis);
             Sheet sheet = workbook.getSheetAt(0);
 
-            for (int r = 0; r<=sheet.getLastRowNum(); r++){
+            for (int r = 0; r <= sheet.getLastRowNum(); r++) {
                 Row row = sheet.getRow(r);
                 Cell cell1 = row.getCell(0);
                 Cell cell2 = row.getCell(1);
@@ -33,4 +33,4 @@ public class ExcelReadAlRows {
         }
 
     }
-    }
+}
