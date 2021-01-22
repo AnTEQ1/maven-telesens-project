@@ -1,7 +1,8 @@
 package com.academy.telesens.lesson10.sort;
 
 import com.academy.telesens.lesson5.exc.Person;
-import com.academy.telesens.lesson7.enumeration.Gender;
+//import com.academy.telesens.lesson7.enumeration.Gender;
+import com.academy.telesens.lesson11.ht.task3.Gender;
 
 import java.util.ArrayList;
 import java.util.Comparator;

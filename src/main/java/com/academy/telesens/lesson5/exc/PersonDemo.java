@@ -1,6 +1,7 @@
 package com.academy.telesens.lesson5.exc;
 
-import com.academy.telesens.lesson7.enumeration.Gender;
+//import com.academy.telesens.lesson7.enumeration.Gender;
+import com.academy.telesens.lesson11.ht.task3.Gender;
 
 public class PersonDemo {
     public static void main(String[] args) {

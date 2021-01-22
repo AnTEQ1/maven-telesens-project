@@ -1,8 +1,9 @@
 package com.academy.telesens.lesson5.exc;
 
-import com.academy.telesens.lesson7.enumeration.Gender;
+//import com.academy.telesens.lesson7.enumeration.Gender;
 import com.academy.telesens.lesson9.NegativeAgeError;
 import com.academy.telesens.lesson9.TooBigAgeError;
+import com.academy.telesens.lesson11.ht.task3.Gender;
 
 import java.util.Objects;
 

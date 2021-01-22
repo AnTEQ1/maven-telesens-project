@@ -1,8 +1,8 @@
 package com.academy.telesens.lesson11.ht.task3;
 
 public enum Gender {
-        MALE ("м"),
-        FEMALE ("ж");
+        MALE ("m"),
+        FEMALE ("f");
 
         private String ru;
 

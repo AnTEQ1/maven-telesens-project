@@ -1,7 +1,8 @@
 package com.academy.telesens.lesson8.ht;
 
 import com.academy.telesens.lesson6.Subscriber;
-import com.academy.telesens.lesson7.enumeration.Gender;
+//import com.academy.telesens.lesson7.enumeration.Gender;
+import com.academy.telesens.lesson11.ht.task3.Gender;
 
 import java.util.Random;
 

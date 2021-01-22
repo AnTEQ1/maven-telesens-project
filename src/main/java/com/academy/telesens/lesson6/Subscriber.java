@@ -1,7 +1,8 @@
 package com.academy.telesens.lesson6;
 
 import com.academy.telesens.lesson5.exc.Person;
-import com.academy.telesens.lesson7.enumeration.Gender;
+//import com.academy.telesens.lesson7.enumeration.Gender;
+import com.academy.telesens.lesson11.ht.task3.Gender;
 
 /* 4) Доработать класс Subscriber. Поля класса:
 *	firstName (имя)

@@ -1,6 +1,7 @@
 package com.academy.telesens.lesson6;
 
-import com.academy.telesens.lesson7.enumeration.Gender;
+//import com.academy.telesens.lesson7.enumeration.Gender;
+import com.academy.telesens.lesson11.ht.task3.Gender;
 
 public class Runner {
     public static void main(String[] args) {
