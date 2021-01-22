@@ -77,7 +77,7 @@ public class Subscriber {
         return  id +
                 ", " + firstName +
                 ", " + lastName +
-                ", " + gender +
+                ", " + gender.getRu() +
                 ", " + age +
                 ", " + phoneNumber +
                 ", " + operator;

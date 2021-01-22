@@ -33,11 +33,11 @@ public class Task3Demo {
         Random random = new Random();
 
         Properties properties = new Properties();
-        File propertiesFile = new File("D:/lesson11/ht/task03/java-part.properties");
+        File propertiesFile = new File("D:/Testing/TelesensAcademy/lesson11/ht/task03/java-part.properties");
 
         try (FileInputStream fis = new FileInputStream(propertiesFile)) {
             properties.load(fis);
-            String fileToWrite = properties.getProperty("subscribers.txt");
+            String fileToWrite = properties.getProperty("subscribers");
             String femaleFirstNameFile = properties.getProperty("female_first_name");
             String femaleLastNameFile = properties.getProperty("female_last_name");
             String maleFirstNameFile = properties.getProperty("male_first_name");
@@ -96,7 +96,7 @@ public class Task3Demo {
                 id = (long)i+1;
                 subscribers.add(new Subscriber(id,firstName,lastName,gender,age,phone,operator));
             }
-            try (PrintWriter pw = new PrintWriter (new FileWriter("D:/lesson11/ht/task03/subscribers.txt",true))){
+            try (PrintWriter pw = new PrintWriter (new FileWriter(fileToWrite,true))){
                 for (int j = 0; j<subscribers.size(); j++) {
                     pw.println(subscribers.get(j));
                 }
