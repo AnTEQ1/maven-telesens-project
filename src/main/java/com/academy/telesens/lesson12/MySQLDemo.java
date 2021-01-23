@@ -1,13 +1,23 @@
 package com.academy.telesens.lesson12;
 
+import com.academy.telesens.util.PropertyProvider;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
+import java.util.Properties;
 
 public class MySQLDemo {
     public static void main(String[] args) {
-        String url = "jdbc:mysql://localhost:3306/operator?user=root&password=root";
+
+
+        String dbUrl2 = PropertyProvider.get("db.url");
+        System.out.println(dbUrl2);
+
+        //String url = "jdbc:mysql://localhost:3306/operator?user=root&password=root";
         String sqlInsert = "Insert into subscriber (first_name, last_name, gender, age) values ('demo', 'demo', 'm', 23 )";
         String sqlInsertTemplate = "Insert into subscriber (first_name, last_name, gender, age) values (?, ?, ?, ? )";
-        try (Connection conn = DriverManager.getConnection(url)) {
+        try (Connection conn = DriverManager.getConnection(dbUrl2)) {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Statement statement = conn.createStatement();
             statement.executeUpdate(sqlInsert);
