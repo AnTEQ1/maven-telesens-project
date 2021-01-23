@@ -8,6 +8,7 @@ public class PropertyProvider {
     private static final String DEFAULT_PROP_FILE = "default-cfg.properties";
     private static Properties prop;
 
+    //блок статическо инициализации
     static {
         init();
     }
