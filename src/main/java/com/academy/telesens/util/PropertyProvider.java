@@ -18,10 +18,12 @@ public class PropertyProvider {
             InputStream is = PropertyProvider.class.getClassLoader().getResourceAsStream(DEFAULT_PROP_FILE);
             prop.load(is);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Error prop initialization");
+            e.printStackTrace();
         }
     }
 
+    //Отдает проперти по ключу
     public static String get(String key) {
         return prop.getProperty(key);
     }
