@@ -4,7 +4,7 @@
 <suite name="default-suite">
     <test name="automation practice demo">
         <classes>
-            <class name="com.academy.lesson13.ht.AuthPageTests" />
+            <!--class name="com.academy.lesson13.ht.AuthPageTests" /-->
             <class name="com.academy.test.AutomationPracticeTests" />
         </classes>
     </test>

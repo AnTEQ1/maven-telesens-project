@@ -8,6 +8,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -19,14 +20,14 @@ public class AuthPageTests {
     List<List<String>> dataSet = readTestDataFromFile.readData();
 
     @BeforeClass (alwaysRun = true)
-    public void setUp () throws Exception {
+    public void setUp () {
         System.setProperty("webdriver.chrome.driver", PropertyProvider.get("chrome.driver"));
         driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
     }
 
     @Test
-    public void wrongLoginAndPasswordTest() throws Exception {
+    public void wrongLoginAndPasswordTest() {
         driver.get(baseUrl);
         driver.findElement(By.linkText("Sign in")).click();
         driver.findElement(By.id("email")).click();
@@ -43,7 +44,7 @@ public class AuthPageTests {
     }
 
     @Test
-    public void wrongLoginTest() throws Exception {
+    public void wrongLoginTest() {
         driver.get(baseUrl);
         driver.findElement(By.linkText("Sign in")).click();
         driver.findElement(By.id("email")).click();
@@ -60,7 +61,7 @@ public class AuthPageTests {
     }
 
     @Test
-    public void wrongPasswordTest() throws Exception {
+    public void wrongPasswordTest(){
         driver.get(baseUrl);
         driver.findElement(By.linkText("Sign in")).click();
         driver.findElement(By.id("email")).click();
@@ -77,7 +78,7 @@ public class AuthPageTests {
     }
 
     @Test
-    public void emptyLoginAndPasswordTest() throws Exception {
+    public void emptyLoginAndPasswordTest()  {
         driver.get(baseUrl);
         driver.findElement(By.linkText("Sign in")).click();
         driver.findElement(By.id("email")).click();
@@ -94,7 +95,7 @@ public class AuthPageTests {
     }
 
     @Test
-    public void emptyPasswordTest() throws Exception {
+    public void emptyPasswordTest()  {
         driver.get(baseUrl);
         driver.findElement(By.linkText("Sign in")).click();
         driver.findElement(By.id("email")).click();
@@ -111,7 +112,7 @@ public class AuthPageTests {
     }
 
     @Test
-    public void emptyLoginTest() throws Exception {
+    public void emptyLoginTest() {
         driver.get(baseUrl);
         driver.findElement(By.linkText("Sign in")).click();
         driver.findElement(By.id("email")).click();
@@ -128,7 +129,7 @@ public class AuthPageTests {
     }
 
     @Test
-    public void incorrectLoginTest() throws Exception {
+    public void incorrectLoginTest() {
         driver.get(baseUrl);
         driver.findElement(By.linkText("Sign in")).click();
         driver.findElement(By.id("email")).click();
@@ -145,7 +146,7 @@ public class AuthPageTests {
     }
 
     @AfterClass (alwaysRun = true)
-    public void tearDown() throws Exception {
+    public void tearDown()  {
         driver.quit();
     }
 }
