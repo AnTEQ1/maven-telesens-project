@@ -13,7 +13,7 @@
         </classes>
     </test-->
     <test name="automation practice demo">
-        <parameter name="browser" value="firefox"></parameter>
+        <parameter name="browser" value="firefox"/>
         <classes>
             <class name="com.academy.test.AutomationPracticeTests" />
         </classes>
