@@ -2,11 +2,20 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 
 <suite name="default-suite">
-    <test name="automation practice demo">
+    <!--test name="lesson 14 ht">
         <classes>
             <class name="com.academy.lesson14.ht.AddNewAddressTest"></class>
-            <!--class name="com.academy.lesson13.ht.AuthPageTests" /-->
-            <!--class name="com.academy.test.AutomationPracticeTests" /-->
+        </classes>
+    </test>
+    <test name="lesson 13 ht">
+        <classes>
+            <class name="com.academy.lesson13.ht.AuthPageTests" />
+        </classes>
+    </test-->
+    <test name="automation practice demo">
+        <parameter name="browser" value="firefox"></parameter>
+        <classes>
+            <class name="com.academy.test.AutomationPracticeTests" />
         </classes>
     </test>
 </suite>

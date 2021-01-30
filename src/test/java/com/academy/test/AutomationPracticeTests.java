@@ -5,12 +5,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.time.Duration;
 
@@ -20,14 +19,27 @@ public class AutomationPracticeTests {
     private String baseUrl = "http://automationpractice.com/index.php";
 
     @BeforeClass(alwaysRun = true)
-    public void setUp() {
-        System.setProperty("webdriver.chrome.driver", PropertyProvider.get("chrome.driver"));
-        System.setProperty("webdriver.gecko.driver", PropertyProvider.get("firefox.driver"));
-        driver = new FirefoxDriver();
+    @Parameters("browser")
+    public void setUp(@Optional("chrome") String browser) {
+        switch (browser) {
+            case "chrome":
+                System.setProperty("webdriver.chrome.driver", PropertyProvider.get("chrome.driver"));
+                driver = new ChromeDriver();
+                break;
+            case "firefox":
+                System.setProperty("webdriver.gecko.driver", PropertyProvider.get("firefox.driver"));
+                driver = new FirefoxDriver();
+                break;
+            default:
+                throw new IllegalArgumentException(
+                        String.format("Browser %s is not supported", browser)
+                );
+        }
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
     }
 
     @Test
+    @Ignore
     public void testAuth() {
         driver.get(baseUrl);
         driver.findElement(By.linkText("Sign in")).click();
@@ -47,6 +59,7 @@ public class AutomationPracticeTests {
     }
 
     @Test
+    @Ignore
     public void testWomenCategory() {
         String expectedWord = "women";
         String expectedTextFromPicture = "You will find here all woman fashion collections.";
@@ -87,13 +100,14 @@ public class AutomationPracticeTests {
             currentRange = driver.findElement(By.xpath("//*[@id=\"layered_price_range\"]")).getText().substring(1, 6); //Получаем текущий диапазон и выризаем только нижнюю его границу
             loc = loc + 1; // увеличиваем переменную для сдвига по оси х
         }
-        actions.release().perform(); // освобождаем слайдер
         Assert.assertEquals(currentRange, expectedCoast); // сравниваем ожидаемое и фактическое значение нижней границы диапазона, хотя это лешнее))
     }
 
     @AfterClass(alwaysRun = true)
     public void tearDown() {
-        driver.quit();
+        if (driver!=null) {
+            driver.quit();
+        }
     }
 
 }
