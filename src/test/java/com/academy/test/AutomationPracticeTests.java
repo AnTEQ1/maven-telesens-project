@@ -12,47 +12,28 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 
-public class AutomationPracticeTests {
-    private WebDriver driver;
+public class AutomationPracticeTests extends BaseTest {
+    //private WebDriver driver;
     private String baseUrl = "http://automationpractice.com/index.php";
 
-    @BeforeClass(alwaysRun = true)
-    @Parameters("browser")
-    public void setUp(@Optional("chrome") String browser) {
-        switch (browser) {
-            case "chrome":
-                System.setProperty("webdriver.chrome.driver", PropertyProvider.get("chrome.driver"));
-                driver = new ChromeDriver();
-                break;
-            case "firefox":
-                System.setProperty("webdriver.gecko.driver", PropertyProvider.get("firefox.driver"));
-                driver = new FirefoxDriver();
-                break;
-            default:
-                throw new IllegalArgumentException(
-                        String.format("Browser %s is not supported", browser)
-                );
-        }
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
-    }
 
-    @Test
-    @Ignore
-    public void testAuth() {
+    @Test (dataProvider = "authDataProvider")
+    public void testAuth(String username, String password, String errMsgExpected) {
         driver.get(baseUrl);
         driver.findElement(By.linkText("Sign in")).click();
         driver.findElement(By.id("email")).click();
         driver.findElement(By.id("email")).clear();
-        driver.findElement(By.id("email")).sendKeys("aser@user");
+        driver.findElement(By.id("email")).sendKeys(username);
         driver.findElement(By.xpath("//form[@id='login_form']/div")).click();
         driver.findElement(By.id("passwd")).click();
         driver.findElement(By.id("passwd")).clear();
-        driver.findElement(By.id("passwd")).sendKeys("user");
+        driver.findElement(By.id("passwd")).sendKeys(password);
         driver.findElement(By.xpath("//button[@id='SubmitLogin']/span")).click();
 
-        String errMsgExpected = "Invalid email address.";
         String errMsgActual = driver.findElement(By.xpath("//*[@id=\"center_column\"]/div[1]/ol/li")).getText();
         Assert.assertEquals(errMsgActual, errMsgExpected);
 
@@ -84,6 +65,7 @@ public class AutomationPracticeTests {
     }
 
     @Test
+    @Ignore
     public void rangeTest() {
         driver.get(baseUrl);
         driver.findElement(By.linkText("Women")).click();
@@ -103,11 +85,27 @@ public class AutomationPracticeTests {
         Assert.assertEquals(currentRange, expectedCoast); // сравниваем ожидаемое и фактическое значение нижней границы диапазона, хотя это лешнее))
     }
 
-    @AfterClass(alwaysRun = true)
-    public void tearDown() {
-        if (driver!=null) {
-            driver.quit();
-        }
+    @DataProvider (name = "authDataProvider")
+    public Object[][] authDataProvider() {
+        Object[] case1 = {"aser@user","user", "Invalid email address."};
+        Object[] case2 = {"aser@gmail.com","", "Password is required."};
+        //Дома доработать, вычитав данные из внешнего файла, реализован в ДЗ  урока 13
+        List<Object[]> cases = new ArrayList<>();
+        cases.add(case1);
+        cases.add(case2);
+
+        //1 способ создания масива из списка
+//        Object[][] tmp = new Object[0][0];
+//        Object[][] result = cases.toArray(tmp);
+
+        //2 способ создания массива из списка
+        Object[][] result = cases.toArray(Object[][]::new);
+
+        return result;
+
+//        return new Object[][]  {
+//                case1, case2
+//        };
     }
 
 }

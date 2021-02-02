@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="default-suite">
+    <!--test name="lesson 14 ht">
+        <classes>
+            <class name="com.academy.lesson14.ht.AddNewAddressTest"></class>
+        </classes>
+    </test>
+    <test name="lesson 13 ht">
+        <classes>
+            <class name="com.academy.lesson13.ht.AuthPageTests" />
+        </classes>
+    </test-->
+    <test name="automation practice demo chrome">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="com.academy.test.AutomationPracticeTests" />
+        </classes>
+    </test>
+    <test name="automation practice demo firefox">
+        <parameter name="browser" value="firefox"/>
+        <classes>
+            <class name="com.academy.test.AutomationPracticeTests" />
+        </classes>
+    </test>
+</suite>
