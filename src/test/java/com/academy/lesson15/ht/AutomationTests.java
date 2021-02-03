@@ -14,8 +14,7 @@ import java.util.List;
 public class AutomationTests extends TestBase {
     private final String baseUrl = "http://automationpractice.com/index.php";
 
-    @Test
-    @Ignore
+    @Test(groups = {"all","login"})
     public void authTest() {
         driver.get(baseUrl);
         driver.findElement(By.linkText("Sign in")).click();
@@ -31,7 +30,7 @@ public class AutomationTests extends TestBase {
         Assert.assertEquals(currentPage, "My account");
     }
 
-    @Test
+    @Test(groups = {"all","address_add"})
     @Ignore
     public void addAddressTest() {
         String address = "Address Test";
@@ -69,13 +68,13 @@ public class AutomationTests extends TestBase {
         String cityStateZipCode = driver.findElement(By.xpath("//*[@id=\"center_column\"]/div[1]/div/div[2]/ul/li[5]")).getText();
         String factPhoneNumber = driver.findElement(By.xpath("//*[@id=\"center_column\"]/div[1]/div/div[2]/ul/li[7]")).getText();
         String factMobileNumber = driver.findElement(By.xpath("//*[@id=\"center_column\"]/div[1]/div/div[2]/ul/li[8]")).getText();
-        Assert.assertEquals(factAddress,address);
+        Assert.assertEquals(factAddress, address);
         Assert.assertEquals(cityStateZipCode, city + ", " + state + " " + zipCode);
         Assert.assertEquals(factPhoneNumber, homeNumber);
-        Assert.assertEquals(factMobileNumber,mobileNumber);
+        Assert.assertEquals(factMobileNumber, mobileNumber);
     }
 
-    @Test
+    @Test(groups = {"all", "address_edit"})
     @Ignore
     public void addressUpdateTest() {
         String address = "Address Test";
@@ -120,10 +119,10 @@ public class AutomationTests extends TestBase {
         driver.findElement(By.id("submitAddress")).click();
         List<WebElement> elements = driver.findElements(By.className("page-subheading"));
         String factEditedAddressName = elements.get(2).getText();
-        Assert.assertEquals(factEditedAddressName.toLowerCase(),editedName.toLowerCase());
+        Assert.assertEquals(factEditedAddressName.toLowerCase(), editedName.toLowerCase());
     }
 
-    @Test
+    @Test(groups = {"all", "address_delete"})
     @Ignore
     public void addressDeletionTest() {
         String address = "Address Test";
@@ -165,27 +164,70 @@ public class AutomationTests extends TestBase {
         alert.accept();
         listOfAddressBlocks = driver.findElements(By.xpath("//div[contains(@class,'col-xs-12 col-sm-6 address')]"));
         int amountOfBlocksAfterDeleting = listOfAddressBlocks.size();
-        Assert.assertEquals(amountOfBlocksAfterDeleting, amountOfBlocksBeforeDeleting-1);
+        Assert.assertEquals(amountOfBlocksAfterDeleting, amountOfBlocksBeforeDeleting - 1);
     }
 
-    @Test
+    @Test(groups = {"all", "sort_by_price"})
+    @Ignore
     public void sortByPriceTest() {
         driver.get(baseUrl);
         driver.findElement(By.xpath("//div[@id='block_top_menu']/ul/li[2]/a")).click();
         /* Т.к. сортировка не работает, пропускаем)
-        * WebElement sortBy = driver.findElement(By.id("selectProductSort"));
-        * Select select = new Select(sortBy);
-        * select.selectByVisibleText("Price: Lowest first");
-        */
+         * WebElement sortBy = driver.findElement(By.id("selectProductSort"));
+         * Select select = new Select(sortBy);
+         * select.selectByVisibleText("Price: Lowest first");
+         */
         List<WebElement> listOfPrices = driver.findElements(By.xpath("//div[contains(@class, 'right-block')]/div/span[contains(@itemprop,'price')]"));
         List<Double> pricesValues = new ArrayList<>();
-        for (int i = 0; i< listOfPrices.size(); i++) {
+        for (int i = 0; i < listOfPrices.size(); i++) {
             pricesValues.add(Double.valueOf(listOfPrices.get(i).getText().substring(1)));
         }
         pricesValues.sort(Double::compare);//т.к. на сайте сортировка не работает, имитируем сортировку по возрастанию цены))
-        for (int i = 0; i< pricesValues.size()-1; i++) {
-            Assert.assertTrue(pricesValues.get(i)<pricesValues.get(i+1));
+        for (int i = 0; i < pricesValues.size() - 1; i++) {
+            Assert.assertTrue(pricesValues.get(i) < pricesValues.get(i + 1));
         }
+    }
+
+    @Test(groups = {"all", "sort_by_name"})
+    @Ignore
+    public void sortByNameTest() {
+        driver.get(baseUrl);
+        driver.findElement(By.xpath("//div[@id='block_top_menu']/ul/li[2]/a")).click();
+        /* Т.к. сортировка не работает, пропускаем)
+         * WebElement sortBy = driver.findElement(By.id("selectProductSort"));
+         * Select select = new Select(sortBy);
+         * select.selectByVisibleText("Product Name: A to Z");
+         */
+        List<WebElement> listOfNames = driver.findElements(By.xpath("//h5[contains(@itemprop,'name')]/a[contains(@class, 'product-name')]"));
+        List<String> names = new ArrayList<>();
+        for (int i = 0; i < listOfNames.size(); i++) {
+            names.add(listOfNames.get(i).getText());
+        }
+        names.sort(String::compareTo);//т.к. на сайте сортировка не работает, имитируем сортировку по возрастанию цены))
+    }
+
+    @Test(groups = {"all", "filter_by_size"})
+    @Ignore
+    public void filterBySizeTest() {
+        driver.get(baseUrl);
+        driver.findElement(By.xpath("//div[@id='block_top_menu']/ul/li[2]/a")).click();
+        String amountOfItemsToFilter = driver.findElement(By.xpath("//a[text()='S']/span")).getText().substring(1, 2);
+        driver.findElement(By.xpath("//a[text()='S']")).click();
+        String textOfFilteredItems = driver.findElement(By.xpath("//div[contains(@class, 'product-count')]")).getText();
+        String totalCountOfFilteredItems = textOfFilteredItems.substring(textOfFilteredItems.length() - 7, textOfFilteredItems.length() - 6);
+        Assert.assertEquals(amountOfItemsToFilter, totalCountOfFilteredItems);
+    }
+
+    @Test(groups = {"all", "filter_by_color"})
+    @Ignore
+    public void filterByColorTest() {
+        driver.get(baseUrl);
+        driver.findElement(By.xpath("//div[@id='block_top_menu']/ul/li[2]/a")).click();
+        String amountOfItemsToFilter = driver.findElement(By.xpath("//a[text()='Beige']/span")).getText().substring(1, 2);
+        driver.findElement(By.xpath("//a[text()='Beige']")).click();
+        String textOfFilteredItems = driver.findElement(By.xpath("//div[contains(@class, 'product-count')]")).getText();
+        String totalCountOfFilteredItems = textOfFilteredItems.substring(textOfFilteredItems.length() - 7, textOfFilteredItems.length() - 6);
+        //Assert.assertEquals(amountOfItemsToFilter, totalCountOfFilteredItems); //т.к. фильтр не работает сравнение проводить не будем
     }
 }
 

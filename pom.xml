@@ -81,8 +81,9 @@
                 </plugins>
             </build>
         </profile>
+        <!-- HT15 run all tests-->
         <profile>
-            <id>home</id>
+            <id>homeTask15AllTests</id>
             <build>
                 <plugins>
                     <plugin>
@@ -92,7 +93,139 @@
                         <configuration>
                             <!--Путь к конфигурации testng.xml-->
                             <suiteXmlFiles>
-                                <suiteXmlFile>suits/home-task.xml</suiteXmlFile>
+                                <suiteXmlFile>suits/task15/home-task.xml</suiteXmlFile>
+                            </suiteXmlFiles>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <!-- HT15 run login tests-->
+        <profile>
+            <id>homeTask15LoginTest</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>3.0.0-M4</version>
+                        <configuration>
+                            <!--Путь к конфигурации testng.xml-->
+                            <suiteXmlFiles>
+                                <suiteXmlFile>suits/task15/home-task-15-login-tests.xml</suiteXmlFile>
+                            </suiteXmlFiles>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <!-- HT15 run address tests-->
+        <profile>
+            <id>homeTask15AddressTest</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>3.0.0-M4</version>
+                        <configuration>
+                            <!--Путь к конфигурации testng.xml-->
+                            <suiteXmlFiles>
+                                <suiteXmlFile>suits/task15/home-task-15-address-tests.xml</suiteXmlFile>
+                            </suiteXmlFiles>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <!-- HT15 run sort tests-->
+        <profile>
+            <id>homeTask15SortTest</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>3.0.0-M4</version>
+                        <configuration>
+                            <!--Путь к конфигурации testng.xml-->
+                            <suiteXmlFiles>
+                                <suiteXmlFile>suits/task15/home-task-15-sort-tests.xml</suiteXmlFile>
+                            </suiteXmlFiles>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <!-- HT15 run filter tests-->
+        <profile>
+            <id>homeTask15FiltersTest</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>3.0.0-M4</version>
+                        <configuration>
+                            <!--Путь к конфигурации testng.xml-->
+                            <suiteXmlFiles>
+                                <suiteXmlFile>suits/task15/home-task-15-filter-tests.xml</suiteXmlFile>
+                            </suiteXmlFiles>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <!-- HT15 run on both browsers-->
+        <profile>
+            <id>ht15runOnBothBrowsers</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>3.0.0-M4</version>
+                        <configuration>
+                            <!--Путь к конфигурации testng.xml-->
+                            <suiteXmlFiles>
+                                <suiteXmlFile>suits/task15/task-15-tests-on-both-browsers.xml</suiteXmlFile>
+                            </suiteXmlFiles>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <!-- HT15 run on chrome-->
+        <profile>
+            <id>ht15runOnChrome</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>3.0.0-M4</version>
+                        <configuration>
+                            <!--Путь к конфигурации testng.xml-->
+                            <suiteXmlFiles>
+                                <suiteXmlFile>suits/task15/task-15-tests-on-chrome.xml</suiteXmlFile>
+                            </suiteXmlFiles>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <!-- HT15 run on firefox-->
+        <profile>
+            <id>ht15runOnFirefox</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>3.0.0-M4</version>
+                        <configuration>
+                            <suiteXmlFiles>
+                                <suiteXmlFile>suits/task15/task-15-tests-on-firefox.xml</suiteXmlFile>
                             </suiteXmlFiles>
                         </configuration>
                     </plugin>

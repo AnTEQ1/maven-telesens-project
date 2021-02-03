@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="home-task-15">
+    <test name="home task 15">
+        <groups>
+            <run>
+                <include name="all"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.academy.lesson15.ht.AutomationTests" />
+        </classes>
+    </test>
+</suite>
