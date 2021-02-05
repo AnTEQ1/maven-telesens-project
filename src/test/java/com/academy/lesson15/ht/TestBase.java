@@ -13,7 +13,7 @@ public class TestBase {
 
     @BeforeMethod(alwaysRun = true)
     @Parameters("browser")
-    public void startUp(String browser) {
+    public void startUp(@Optional ("chrome") String browser) {
         switch (browser) {
             case "chrome":
                 System.setProperty("webdriver.chrome.driver", PropertyProvider.get("chrome.driver"));

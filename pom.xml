@@ -39,6 +39,11 @@
             <artifactId>testng</artifactId>
             <version>7.3.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>2.14.0</version>
+        </dependency>
     </dependencies>
     <profiles>
         <!-- by default -->
@@ -93,7 +98,8 @@
                         <configuration>
                             <!--Путь к конфигурации testng.xml-->
                             <suiteXmlFiles>
-                                <suiteXmlFile>suits/task15/home-task.xml</suiteXmlFile>
+                                <!--suiteXmlFile>suits/task15/home-task.xml</suiteXmlFile-->
+                                <suiteXmlFile>${suite1}</suiteXmlFile>
                             </suiteXmlFiles>
                         </configuration>
                     </plugin>

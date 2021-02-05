@@ -1,0 +1,25 @@
+1) Дан файл selector-practice.html
+	Используя селекторы выбрать следующие элементы:
+		a) выбрать input типа checkbox.
+		b) выбрать input типа checkbox, НЕ отмеченный.
+		c) Найти все элементы с id=message или message-*.
+		d) Найти все элементы с id=message-*.
+		e) Найти все ссылки с расширением href="...zip".
+		f) Найти все элементы с атрибутом data-action, содержащим delete в списке (через пробел).
+		g) Найти все элементы, у которых ЕСТЬ атрибут data-action, но он НЕ содержит delete в списке (через пробел).
+		h) Выбрать все чётные элементы списка #messages.
+		i) Выбрать один элемент сразу за заголовком h3#widget-title на том же уровне вложенности.
+		k) Выбрать все ссылки, следующие за заголовком h3#widget-title на том же уровне вложенности.
+		l) Выбрать ссылку внутри последнего элемента списка #messages.
+
+//input[@type = 'checkbox']
+//input[@checked]
+//*[contains(@id,  'message-') or @id='message']
+//*[starts-with(@id,  'message-')]
+//a[contains(@href, '.zip')]
+//*[contains(@data-action, ' delete')]
+//*[@data-action and not(contains(@data-action,' delete'))]
+//*[@id = 'messages']/child::*[position() mod 2 = 0]
+//h3[@id = 'widget-title']/following-sibling::*[1]
+//h3[@id = 'widget-title']/following-sibling::a
+//*[@id = 'messages']/*[last()]/a
