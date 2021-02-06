@@ -1,17 +1,17 @@
 package com.academy.test;
 
-import com.academy.telesens.util.PropertyProvider;
+import com.academy.page.HomePage;
+import com.academy.page.LoginPage;
+import com.academy.page.MyAccountPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Ignore;
+import org.testng.annotations.Test;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +37,44 @@ public class AutomationPracticeTests extends BaseTest {
         String errMsgActual = driver.findElement(By.xpath("//*[@id=\"center_column\"]/div[1]/ol/li")).getText();
         Assert.assertEquals(errMsgActual, errMsgExpected);
 
+    }
+
+    @Test (dataProvider = "authDataProvider")
+    public void testAuthUsingPageObject(String username, String password, String errMsgExpected) {
+        HomePage homePage = new HomePage(driver,baseUrl);
+        homePage = homePage.goToHome();
+        LoginPage loginPage = homePage.login();
+        loginPage.inputLogin(username);
+        loginPage.inputPassword(password);
+        loginPage.submit();
+
+        String errMsgAct = loginPage.getErrorMsg();
+        Assert.assertEquals(errMsgAct,errMsgExpected);
+
+    }
+
+    @Test (dataProvider = "authDataProvider")
+    public void testAuthUsingPageObject2(String username, String password, String errMsgExpected) {
+        LoginPage loginPage = new HomePage(driver,baseUrl)
+                .goToHome()
+                .login()
+                .inputLogin(username)
+                .inputPassword(password)
+                .submit();
+        String errMsgAct = loginPage.getErrorMsg();
+        Assert.assertEquals(errMsgAct,errMsgExpected);
+    }
+
+    @Test (dataProvider = "authSuccessDataProvider")
+    public void testAuthSuccess(String username, String password, String userNameExp) {
+        MyAccountPage myAccountPage = new HomePage(driver,baseUrl)
+                .goToHome()
+                .login()
+                .inputLogin(username)
+                .inputPassword(password)
+                .submitSuccess();
+        String userNameAct = myAccountPage.getUserName();
+        Assert.assertEquals(userNameAct,userNameExp);
     }
 
     @Test
@@ -106,6 +144,12 @@ public class AutomationPracticeTests extends BaseTest {
 //        return new Object[][]  {
 //                case1, case2
 //        };
+    }
+    @DataProvider (name = "authSuccessDataProvider")
+    public Object[][] authSuccessDataProvider() {
+        return new String [][]{{
+                "an.andrey.90@gmail.com", "123qweASD", "An Andrii"
+        }};
     }
 
 }
