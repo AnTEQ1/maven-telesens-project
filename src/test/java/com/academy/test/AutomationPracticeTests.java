@@ -3,10 +3,13 @@ package com.academy.test;
 import com.academy.page.HomePage;
 import com.academy.page.LoginPage;
 import com.academy.page.MyAccountPage;
+import com.academy.telesens.lesson16.LoggingDemo;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Ignore;
@@ -75,6 +78,8 @@ public class AutomationPracticeTests extends BaseTest {
                 .submitSuccess();
         String userNameAct = myAccountPage.getUserName();
         Assert.assertEquals(userNameAct,userNameExp);
+
+        myAccountPage.logout();
     }
 
     @Test

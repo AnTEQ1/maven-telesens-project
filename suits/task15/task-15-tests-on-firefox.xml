@@ -5,7 +5,7 @@
     <test name="home task 15 on chrome">
         <parameter name="browser" value="firefox"/>
         <classes>
-            <class name="com.academy.lesson15.ht.AutomationTests" />
+            <class name="com.academy.lesson17.ht.AutomationTestsUsingPageObject" />
         </classes>
     </test>
 </suite>

@@ -9,7 +9,7 @@
             </run>
         </groups>
         <classes>
-            <class name="com.academy.lesson15.ht.AutomationTests" />
+            <class name="com.academy.lesson17.ht.AutomationTestsUsingPageObject" />
         </classes>
     </test>
 </suite>
