@@ -77,7 +77,7 @@ public class AutomationPracticeTests extends BaseTest {
                 .inputPassword(password)
                 .submitSuccess();
         String userNameAct = myAccountPage.getUserName();
-        Assert.assertEquals(userNameAct,userNameExp);
+        AssertWrapper.assertEquals(userNameAct,userNameExp);
 
         myAccountPage.logout();
     }
