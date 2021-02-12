@@ -23,6 +23,9 @@ public class MyAddressesPage extends BasePage{
     private WebElement editAddressButton;
     @FindBy (className = "page-subheading")
     private List<WebElement> addresses;
+    @FindBy (xpath = "//li[last()]/a[2]/span[contains(text(),'Delete')] ")
+    private WebElement addressDeleteButton;
+
 
     public MyAddressesPage(WebDriver driver) {
         super(driver);
@@ -56,5 +59,15 @@ public class MyAddressesPage extends BasePage{
 
     public String getEditedAddressName() {
         return addresses.get(2).getText();
+    }
+
+    public int getAmountOfAddresses() {
+        return addresses.size();
+    }
+
+    public MyAddressesPage deleteAddress (String addressAlias) {
+        String pathToAddressToDelete = String.format("//h3[contains(text(),\"%s\")]/../../%s",addressAlias, addressDeleteButton);
+        driver.findElement(By.xpath(pathToAddressToDelete));
+        return this;
     }
 }

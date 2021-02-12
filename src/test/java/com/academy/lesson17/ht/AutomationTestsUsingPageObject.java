@@ -3,13 +3,10 @@ package com.academy.lesson17.ht;
 import com.academy.lesson17.ht.pages.*;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AutomationTestsUsingPageObject extends TestBase {
@@ -110,78 +107,57 @@ public class AutomationTestsUsingPageObject extends TestBase {
         String homeNumber = "+380577556584";
         String mobileNumber = "+380958895644";
         String nameOfAddress = "For deleting";
-        driver.get(baseUrl);
-        driver.findElement(By.linkText("Sign in")).click();
-        driver.findElement(By.id("email")).clear();
-        driver.findElement(By.id("email")).sendKeys("an.andrey.90@gmail.com");
-        driver.findElement(By.id("passwd")).clear();
-        driver.findElement(By.id("passwd")).sendKeys("123qweASD");
-        driver.findElement(By.id("SubmitLogin")).click();
-        driver.findElement(By.linkText("My addresses")).click();
-        driver.findElement(By.linkText("Add a new address")).click();
-        driver.findElement(By.id("address1")).clear();
-        driver.findElement(By.id("address1")).sendKeys(address);
-        driver.findElement(By.id("city")).clear();
-        driver.findElement(By.id("city")).sendKeys(city);
-        WebElement listOfStates = driver.findElement(By.id("id_state"));
-        Select select = new Select(listOfStates);
-        select.selectByVisibleText(state);
-        driver.findElement(By.id("postcode")).clear();
-        driver.findElement(By.id("postcode")).sendKeys(zipCode);
-        driver.findElement(By.id("phone")).clear();
-        driver.findElement(By.id("phone")).sendKeys(homeNumber);
-        driver.findElement(By.id("phone_mobile")).clear();
-        driver.findElement(By.id("phone_mobile")).sendKeys(mobileNumber);
-        driver.findElement(By.id("alias")).clear();
-        driver.findElement(By.id("alias")).sendKeys(nameOfAddress);
-        driver.findElement(By.id("submitAddress")).click();
-        List<WebElement> listOfAddressBlocks = driver.findElements(By.xpath("//div[contains(@class,'col-xs-12 col-sm-6 address')]"));
-        int amountOfBlocksBeforeDeleting = listOfAddressBlocks.size();
-        driver.findElement(By.xpath("//h3[contains(text(),\"For deleting\")]/../../li[last()]/a[2]")).click();
+        HomePage homePage = new HomePage(driver, baseUrl);
+        homePage = homePage.goToHomePage();
+        LoginPage loginPage = homePage.login();
+        loginPage.inputLogin("an.andrey.90@gmail.com");
+        loginPage.inputPassword("123qweASD");
+        MyAccountPage myAccountPage = loginPage.submitForSuccess();
+        MyAddressesPage myAddressesPage = myAccountPage.goToMyAddressesPage();
+        AddNewAddressPage addNewAddressPage = myAddressesPage.goToAddNewAddressPage();
+        addNewAddressPage.inputAddress(address);
+        addNewAddressPage.inputCity(city);
+        addNewAddressPage.selectState(state);
+        addNewAddressPage.inputZipCode(zipCode);
+        addNewAddressPage.inputPhoneNumber(homeNumber);
+        addNewAddressPage.inputMobilePhoneNumber(mobileNumber);
+        addNewAddressPage.inputAlias(nameOfAddress);
+        myAddressesPage = addNewAddressPage.saveAddress();
+        int amountOfBlocksBeforeDeleting = myAddressesPage.getAmountOfAddresses();
+        myAddressesPage.deleteAddress("For deleting");
         Alert alert = driver.switchTo().alert();
         alert.accept();
-        listOfAddressBlocks = driver.findElements(By.xpath("//div[contains(@class,'col-xs-12 col-sm-6 address')]"));
-        int amountOfBlocksAfterDeleting = listOfAddressBlocks.size();
+        int amountOfBlocksAfterDeleting = myAddressesPage.getAmountOfAddresses();
         Assert.assertEquals(amountOfBlocksAfterDeleting, amountOfBlocksBeforeDeleting - 1);
     }
 
     @Test(groups = {"all", "sort_by_price"})
     @Ignore
     public void sortByPriceTest() {
-        driver.get(baseUrl);
-        driver.findElement(By.xpath("//div[@id='block_top_menu']/ul/li[2]/a")).click();
+        HomePage homePage = new HomePage(driver, baseUrl);
+        homePage = homePage.goToHomePage();
+        DressesPage dressesPage = homePage.goToDressesPage();
         /* Т.к. сортировка не работает, пропускаем)
-         * WebElement sortBy = driver.findElement(By.id("selectProductSort"));
-         * Select select = new Select(sortBy);
-         * select.selectByVisibleText("Price: Lowest first");
+         * dressesPage.sortDresses("Price: Lowest first")
          */
-        List<WebElement> listOfPrices = driver.findElements(By.xpath("//div[contains(@class, 'right-block')]/div/span[contains(@itemprop,'price')]"));
-        List<Double> pricesValues = new ArrayList<>();
-        for (int i = 0; i < listOfPrices.size(); i++) {
-            pricesValues.add(Double.valueOf(listOfPrices.get(i).getText().substring(1)));
-        }
-        pricesValues.sort(Double::compare);//т.к. на сайте сортировка не работает, имитируем сортировку по возрастанию цены))
-        for (int i = 0; i < pricesValues.size() - 1; i++) {
-            Assert.assertTrue(pricesValues.get(i) < pricesValues.get(i + 1));
+        List<Double> prices = dressesPage.getAllPricesOnPage();
+        prices.sort(Double::compare);//т.к. на сайте сортировка не работает, имитируем сортировку по возрастанию цены))
+        for (int i = 0; i < prices.size() - 1; i++) {
+            Assert.assertTrue(prices.get(i) < prices.get(i + 1));
         }
     }
 
     @Test(groups = {"all", "sort_by_name"})
     @Ignore
     public void sortByNameTest() {
-        driver.get(baseUrl);
-        driver.findElement(By.xpath("//div[@id='block_top_menu']/ul/li[2]/a")).click();
+        HomePage homePage = new HomePage(driver, baseUrl);
+        homePage = homePage.goToHomePage();
+        DressesPage dressesPage = homePage.goToDressesPage();
         /* Т.к. сортировка не работает, пропускаем)
-         * WebElement sortBy = driver.findElement(By.id("selectProductSort"));
-         * Select select = new Select(sortBy);
-         * select.selectByVisibleText("Product Name: A to Z");
+         * dressesPage.sortDresses("Product Name: A to Z")
          */
-        List<WebElement> listOfNames = driver.findElements(By.xpath("//h5[contains(@itemprop,'name')]/a[contains(@class, 'product-name')]"));
-        List<String> names = new ArrayList<>();
-        for (int i = 0; i < listOfNames.size(); i++) {
-            names.add(listOfNames.get(i).getText());
-        }
-        names.sort(String::compareTo);//т.к. на сайте сортировка не работает, имитируем сортировку по возрастанию цены))
+        List<String> names = dressesPage.getAllNamesOfDressesOnPage();
+        names.sort(String::compareTo);//т.к. на сайте сортировка не работает, имитируем сортировку по алфавиту))
     }
 
     @Test(groups = {"all", "filter_by_size"})

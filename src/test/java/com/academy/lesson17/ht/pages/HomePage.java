@@ -10,6 +10,8 @@ public class HomePage  extends BasePage{
 
     @FindBy(linkText = "Sign in")
     private WebElement signInLink;
+    @FindBy(xpath = "//div[@id='block_top_menu']/ul/li[2]/a")
+    private WebElement dressesLink;
 
     public HomePage(WebDriver driver, String baseUrl) {
         super(driver);
@@ -25,5 +27,10 @@ public class HomePage  extends BasePage{
     public LoginPage login() {
         signInLink.click();
         return new LoginPage(driver);
+    }
+
+    public DressesPage goToDressesPage() {
+        dressesLink.click();
+       return new DressesPage (driver);
     }
 }
