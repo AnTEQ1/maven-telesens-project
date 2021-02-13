@@ -1,13 +1,13 @@
 package com.academy.page;
 
-import com.academy.telesens.lesson16.LoggingDemo;
+import com.academy.core.BasePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class HomePage extends BasePage{
+public class HomePage extends BasePage {
     private static Logger LOG = LoggerFactory.getLogger(HomePage.class);
 
     private String baseUrl;

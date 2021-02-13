@@ -1,4 +1,4 @@
-package com.academy.test;
+package com.academy.core;
 
 import com.academy.telesens.util.PropertyProvider;
 import org.openqa.selenium.*;
@@ -17,6 +17,14 @@ public class DetailWebDriverEventListener extends AbstractWebDriverEventListener
     private static Logger LOG = LoggerFactory.getLogger(DetailWebDriverEventListener.class);
     protected static final Logger LOG_BROWSER = LoggerFactory.getLogger("BROWSER");
     protected static final Logger LOG_PERFORMANCE = LoggerFactory.getLogger("PERFORMANCE");
+
+    private boolean logPerformance;
+    private boolean logBrowser;
+
+    public DetailWebDriverEventListener(boolean logPerformance, boolean logBrowser) {
+        this.logPerformance = logPerformance;
+        this.logBrowser = logBrowser;
+    }
 
     @Override
     public void onException(Throwable throwable, WebDriver driver) {
@@ -59,11 +67,14 @@ public class DetailWebDriverEventListener extends AbstractWebDriverEventListener
 
     @Override
     public void afterNavigateTo(String url, WebDriver driver) {
-        LOG_BROWSER.debug("Navigated to {}", url);
-        driver.manage().logs().get(LogType.BROWSER).forEach(e->LOG_BROWSER.debug(e.getMessage()));
-
-        LOG_PERFORMANCE.debug("Navigated to {}", url);
-        driver.manage().logs().get(LogType.PERFORMANCE).forEach(e->LOG_PERFORMANCE.debug(e.getMessage()));
+        if (logBrowser) {
+            LOG_BROWSER.debug("Navigated to {}", url);
+            driver.manage().logs().get(LogType.BROWSER).forEach(e -> LOG_BROWSER.debug(e.getMessage()));
+        }
+        if (logPerformance) {
+            LOG_PERFORMANCE.debug("Navigated to {}", url);
+            driver.manage().logs().get(LogType.PERFORMANCE).forEach(e -> LOG_PERFORMANCE.debug(e.getMessage()));
+        }
     }
 
 }

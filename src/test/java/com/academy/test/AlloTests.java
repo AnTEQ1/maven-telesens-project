@@ -1,10 +1,12 @@
 package com.academy.test;
 
+import com.academy.core.AssertWrapper;
+import com.academy.core.BaseTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
-public class AlloTests extends BaseTest{
+public class AlloTests extends BaseTest {
     private String baseUrl = "https://allo.ua/";
     @Test
     public void testPriceGadget() {

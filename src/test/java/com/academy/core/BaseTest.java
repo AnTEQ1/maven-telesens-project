@@ -1,6 +1,5 @@
-package com.academy.test;
+package com.academy.core;
 
-import com.academy.telesens.lesson16.LoggingDemo;
 import com.academy.telesens.util.PropertyProvider;
 import net.lightbody.bmp.BrowserMobProxy;
 import net.lightbody.bmp.BrowserMobProxyServer;
@@ -8,7 +7,6 @@ import net.lightbody.bmp.client.ClientUtil;
 import net.lightbody.bmp.core.har.Har;
 import net.lightbody.bmp.core.har.HarEntry;
 import org.openqa.selenium.Proxy;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -19,7 +17,6 @@ import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.*;
-import org.w3c.dom.events.Event;
 
 import java.lang.reflect.Method;
 import java.time.Duration;
@@ -33,28 +30,26 @@ public class BaseTest {
     protected EventFiringWebDriver driver;
     private BrowserMobProxy proxy;
 
+    private boolean logPerformance;
+    private boolean logBrowser;
+    private boolean logTraffic;
+
     @BeforeClass(alwaysRun = true)
     @Parameters("browser")
     public void setUp(@Optional("chrome") String browser) {
+        initCfg();
         switch (browser) {
             case "chrome":
                 System.setProperty("webdriver.chrome.driver", PropertyProvider.get("chrome.driver"));
                 ChromeOptions options = new ChromeOptions();
 
-                proxy = new BrowserMobProxyServer();
-                proxy.start(1001);
+               if (logTraffic) {
+                   initProxyForTrafic(options);
+               }
 
-                // get the Selenium proxy object
-                Proxy seleniumProxy = ClientUtil.createSeleniumProxy(proxy);
-
-                // configure it as a desired capability
-                options.setCapability(CapabilityType.PROXY, seleniumProxy);
-                options.addArguments("--ignore-certificate-errors");
-                proxy.newHar("automation");
-
-                LoggingPreferences logPrefs = new LoggingPreferences();
-                logPrefs.enable(LogType.PERFORMANCE, Level.ALL);
-                options.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
+               if (logPerformance) {
+                   initLogPerformance(options);
+               }
 
                 driver = new EventFiringWebDriver(new ChromeDriver(options));
                 break;
@@ -69,24 +64,22 @@ public class BaseTest {
         }
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
-        eventListener = new DetailWebDriverEventListener();
+        eventListener = new DetailWebDriverEventListener(logPerformance,logBrowser);
         driver.register(eventListener);
     }
 
+
+
     @AfterClass(alwaysRun = true)
     public void tearDown() throws Exception {
-        Har har = proxy.endHar();
-        List<HarEntry> entries = har.getLog().getEntries();
-        for (int i = 0; i < entries.size(); i++) {
-            HarEntry item = entries.get(i);
-            LOG_TRAFFIC.debug(item.getResponse().getStatus() + ":" + item.getRequest().getUrl());
-            //LOG_TRAFFIC.debug(item.getRequest().getHeaders().toString());
-
+        if (logTraffic) {
+            makeLogTraffic();
         }
         if (driver!=null) {
             driver.quit();
         }
     }
+
 
     @BeforeMethod
     public void testSetUp(Method method, Object[] parameters) {
@@ -99,6 +92,41 @@ public class BaseTest {
     }
 
     protected void makeScreenShot() {
-        eventListener.makeScreenshot(driver); // можно вызывать где нуно в тесте и делать скрин, но ноужно передать куда сохранить скрин иначе сохранит куда прописано по умолчанию
+        eventListener.makeScreenshot(driver); // можно вызывать где нужно в тесте и делать скрин, но ноужно передать куда сохранить скрин иначе сохранит куда прописано по умолчанию
+    }
+
+    private void initCfg() {
+        logPerformance = PropertyProvider.getBoolean("log.performance");
+        logBrowser = PropertyProvider.getBoolean("log.browser");
+        logTraffic = PropertyProvider.getBoolean("log.traffic");
+    }
+
+    private  void initProxyForTrafic(ChromeOptions options) {
+        proxy = new BrowserMobProxyServer();
+        proxy.start(1001);
+
+        // get the Selenium proxy object
+        Proxy seleniumProxy = ClientUtil.createSeleniumProxy(proxy);
+
+        // configure it as a desired capability
+        options.setCapability(CapabilityType.PROXY, seleniumProxy);
+        options.addArguments("--ignore-certificate-errors");
+        proxy.newHar("automation");
+    }
+
+    private void initLogPerformance(ChromeOptions options) {
+        LoggingPreferences logPrefs = new LoggingPreferences();
+        logPrefs.enable(LogType.PERFORMANCE, Level.ALL);
+        options.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
+    }
+
+    private void makeLogTraffic() {
+        Har har = proxy.endHar();
+        List<HarEntry> entries = har.getLog().getEntries();
+        for (int i = 0; i < entries.size(); i++) {
+            HarEntry item = entries.get(i);
+            LOG_TRAFFIC.debug(item.getResponse().getStatus() + ":" + item.getRequest().getUrl());
+            //LOG_TRAFFIC.debug(item.getRequest().getHeaders().toString());
+        }
     }
 }
