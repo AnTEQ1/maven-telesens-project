@@ -125,7 +125,7 @@
                             <!--Путь к конфигурации testng.xml-->
                             <suiteXmlFiles>
                                 <!--suiteXmlFile>suits/task15/home-task.xml</suiteXmlFile-->
-                                <suiteXmlFile>${suite1}</suiteXmlFile>
+                                <suiteXmlFile>${ht}</suiteXmlFile>
                             </suiteXmlFiles>
                         </configuration>
                     </plugin>
@@ -144,7 +144,7 @@
                         <configuration>
                             <!--Путь к конфигурации testng.xml-->
                             <suiteXmlFiles>
-                                <suiteXmlFile>suits/task15/home-task-15-login-tests.xml</suiteXmlFile>
+                                <suiteXmlFile>${login}</suiteXmlFile>
                             </suiteXmlFiles>
                         </configuration>
                     </plugin>
@@ -163,7 +163,7 @@
                         <configuration>
                             <!--Путь к конфигурации testng.xml-->
                             <suiteXmlFiles>
-                                <suiteXmlFile>suits/task15/home-task-15-address-tests.xml</suiteXmlFile>
+                                <suiteXmlFile>${address}</suiteXmlFile>
                             </suiteXmlFiles>
                         </configuration>
                     </plugin>
@@ -182,7 +182,7 @@
                         <configuration>
                             <!--Путь к конфигурации testng.xml-->
                             <suiteXmlFiles>
-                                <suiteXmlFile>suits/task15/home-task-15-sort-tests.xml</suiteXmlFile>
+                                <suiteXmlFile>${sort}</suiteXmlFile>
                             </suiteXmlFiles>
                         </configuration>
                     </plugin>
@@ -201,7 +201,7 @@
                         <configuration>
                             <!--Путь к конфигурации testng.xml-->
                             <suiteXmlFiles>
-                                <suiteXmlFile>suits/task15/home-task-15-filter-tests.xml</suiteXmlFile>
+                                <suiteXmlFile>${filter}</suiteXmlFile>
                             </suiteXmlFiles>
                         </configuration>
                     </plugin>
@@ -220,7 +220,7 @@
                         <configuration>
                             <!--Путь к конфигурации testng.xml-->
                             <suiteXmlFiles>
-                                <suiteXmlFile>suits/task15/task-15-tests-on-both-browsers.xml</suiteXmlFile>
+                                <suiteXmlFile>${bothBrowsers}</suiteXmlFile>
                             </suiteXmlFiles>
                         </configuration>
                     </plugin>
@@ -239,7 +239,7 @@
                         <configuration>
                             <!--Путь к конфигурации testng.xml-->
                             <suiteXmlFiles>
-                                <suiteXmlFile>suits/task15/task-15-tests-on-chrome.xml</suiteXmlFile>
+                                <suiteXmlFile>${chrome}</suiteXmlFile>
                             </suiteXmlFiles>
                         </configuration>
                     </plugin>
@@ -257,7 +257,7 @@
                         <version>3.0.0-M4</version>
                         <configuration>
                             <suiteXmlFiles>
-                                <suiteXmlFile>suits/task15/task-15-tests-on-firefox.xml</suiteXmlFile>
+                                <suiteXmlFile>${firefox}</suiteXmlFile>
                             </suiteXmlFiles>
                         </configuration>
                     </plugin>
