@@ -1,5 +1,8 @@
 package com.academy.telesens.lesson11.ht.task3;
 
+import io.cucumber.java.it.Ma;
+import org.openqa.selenium.InvalidArgumentException;
+
 public enum Gender {
         MALE ("m"),
         FEMALE ("f");
@@ -12,5 +15,15 @@ public enum Gender {
 
         public String getRu() {
                 return ru;
+        }
+
+        public static Gender parseGender (String g) {
+           if (g.equals("m")) {
+                   return MALE;
+           }
+           if (g.equals("f")) {
+                   return FEMALE;
+           }
+           throw new InvalidArgumentException("Unknown gender value " + g);
         }
 }

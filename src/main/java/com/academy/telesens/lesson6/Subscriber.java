@@ -26,6 +26,7 @@ import com.academy.telesens.lesson11.ht.task3.Gender;
 public class Subscriber extends Person {
     private  String phoneNumder;
     private Operator operator;
+    private int id;
 
     public Subscriber() {
     }
@@ -45,6 +46,7 @@ public class Subscriber extends Person {
     public Subscriber (String firstName, String lastName, int age, Gender gender) {
         super(firstName, lastName, age, gender);
     }
+
 
     public String getPhoneNumder() {
         return phoneNumder;
@@ -80,6 +82,14 @@ public class Subscriber extends Person {
     public Subscriber withAge(int age){
         super.age = age; //должен быть protected
         return this;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override
