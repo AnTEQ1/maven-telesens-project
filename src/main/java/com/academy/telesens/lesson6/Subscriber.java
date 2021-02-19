@@ -95,11 +95,11 @@ public class Subscriber extends Person {
     @Override
     public String toString() {
         return "Subscriber{" +
-                "firstName='" + firstName + '\'' +
+                "id=" + id + '\'' +
+                ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", age=" + age +
-                ", phoneNumder='" + phoneNumder + '\'' +
-                ", operator=" + operator +
+                ", gender='" + getGender() +
                 '}';
     }
 }
