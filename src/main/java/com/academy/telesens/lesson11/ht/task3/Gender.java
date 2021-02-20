@@ -26,4 +26,14 @@ public enum Gender {
            }
            throw new InvalidArgumentException("Unknown gender value " + g);
         }
+
+        public String toValue () {
+            if (this == MALE) {
+                return "m";
+            }
+            if (this == FEMALE) {
+                return "f";
+            }
+            return  null;
+        }
 }

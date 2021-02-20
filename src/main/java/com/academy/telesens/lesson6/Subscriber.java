@@ -4,6 +4,8 @@ import com.academy.telesens.lesson5.exc.Person;
 //import com.academy.telesens.lesson7.enumeration.Gender;
 import com.academy.telesens.lesson11.ht.task3.Gender;
 
+import java.util.Objects;
+
 /* 4) Доработать класс Subscriber. Поля класса:
 *	firstName (имя)
 *	lastName (фамилия)
@@ -101,5 +103,19 @@ public class Subscriber extends Person {
                 ", age=" + age +
                 ", gender='" + getGender() +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Subscriber)) return false;
+        if (!super.equals(o)) return false;
+        Subscriber that = (Subscriber) o;
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), id);
     }
 }
