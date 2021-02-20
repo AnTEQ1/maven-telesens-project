@@ -7,6 +7,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.*;
 
 import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 public class TestBase {
     protected WebDriver driver;
@@ -28,7 +29,8 @@ public class TestBase {
                         String.format("Browser %s is not supported", browser)
                 );
         }
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+        //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10)); // selenium 4...
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); // selenium 3...
     }
 
     @AfterMethod(alwaysRun = true)

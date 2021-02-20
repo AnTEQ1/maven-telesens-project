@@ -17,6 +17,7 @@ import org.testng.Assert;
 
 import java.io.IOException;
 import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 public class StepDefs {
     private String baseUrl = "http://automationpractice.com/index.php";
@@ -30,7 +31,8 @@ public class StepDefs {
         driver = new ChromeDriver();
 
         // Неявное ожидание (Implicit Waits)
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10)); // selenium 4...
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); // selenium 3...
         driver.manage().window().maximize();
     }
 

@@ -13,6 +13,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 public class AddNewAddressTest {
     private WebDriver driver;
@@ -22,8 +23,9 @@ public class AddNewAddressTest {
     public void setUp () {
         System.setProperty("webdriver.chrome.driver", PropertyProvider.get("chrome.driver"));
         driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
-    }
+        //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10)); // selenium 4...
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); // selenium 3...
+        }
 
     @Test
     public void testNewAddressAdd() {
