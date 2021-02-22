@@ -1,5 +1,6 @@
 package com.academy.selenide.page;
 
+import com.academy.telesens.lesson11.ht.task3.Gender;
 import com.academy.telesens.lesson6.Subscriber;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
@@ -18,9 +19,14 @@ public class SubscribersPage {
     private SelenideElement linkToEditForm;
     @FindBy(css = "a[name='contact-edit-id']")
     private List<SelenideElement> idS;
-
     @FindBy(css = "tr > td:nth-child(3)")
     private List<SelenideElement> fNames;
+    @FindBy(css = "")
+    private List<SelenideElement> lNames;
+    @FindBy(css = "")
+    private List<SelenideElement> ageS;
+    @FindBy(css = "")
+    private List<SelenideElement> genderS;
 
     private String fNameByIdXPathTempl = "/tr[td/a[text() = '%d']]/td[3]";
 
@@ -34,14 +40,17 @@ public class SubscribersPage {
         linkToEditForm.$(By.linkText(String.valueOf(id)));
         return page(EditFormPage.class);
     }
+
     public List<Subscriber> getAllSubscribers() {
         List<Subscriber> subscribers = new ArrayList<>();
         for (int i = 0; i < idS.size(); i++) {
             Subscriber subscriber = new Subscriber();
             subscriber.setId(Integer.parseInt(idS.get(i).getText().trim()));
             subscriber.setFirstName(fNames.get(i).text().trim());
+            subscriber.setLastName (lNames.get(i).text().trim());
+            subscriber.setAge(Integer.parseInt (ageS.get(i).text().trim()));
+            subscriber.setGender (Gender.parseGender (genderS.get(i).text().trim()));
         }
-
         return subscribers;
     }
 
