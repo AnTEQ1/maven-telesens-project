@@ -1,5 +1,6 @@
 package com.academy.selenide;
 
+import com.academy.selenide.page.EditFormPage;
 import com.academy.selenide.page.FormPage;
 import com.academy.selenide.page.HomePage;
 import com.academy.selenide.page.SubscribersPage;
@@ -55,6 +56,46 @@ public class SelenideTests {
 //                .selectGender("Male")
 //                .fillAgeField(32)
 //                .saveSubscriber();
+    }
+    @Test
+    public void testEditSubscriber() {
+        HomePage homePage = open (baseUrl,HomePage.class);
+        SubscribersPage subscribersPage = homePage.goToSubscriber ();
+        List<Subscriber> before = subscribersPage.getAllSubscribers ();
+
+        //before - найти того абонента которого будем менять и заменить тем на кого будем менять в тесте
+
+        EditFormPage editFormPage = subscribersPage.editSubscriber(10);
+        editFormPage.fillFirstNameField();
+        editFormPage.fillLastNameField();
+        subscribersPage = editFormPage.saveSubscriber();
+
+        List<Subscriber> after = subscribersPage.getAllSubscribers ();
+        Assert.assertEquals (after,before);
+    }
+
+    @Test
+    public void testDeleteSubscriber(Subscriber subscriber) {
+        HomePage homePage = open (baseUrl,HomePage.class);
+        SubscribersPage subscribersPage = homePage.goToSubscriber ();
+        List<Subscriber> before = subscribersPage.getAllSubscribers ();
+        List<Subscriber> after;
+        if (!before.isEmpty ()) {
+            //Удалить с формы
+            after = subscribersPage.getAllSubscribers ();
+        } else {
+            FormPage formPage = subscribersPage.goToFormPage();
+            formPage.fillFirstNameField(subscriber.getFirstName ());
+            formPage.fillLastNameField(subscriber.getLastName ());
+            formPage.selectGender(subscriber.getGender().toValue());
+            formPage.fillAgeField(subscriber.getAge ());
+            subscribersPage = formPage.saveSubscriber();
+            before = subscribersPage.getAllSubscribers ();
+            //Удалить с формы
+            after = subscribersPage.getAllSubscribers ();
+        }
+        before.remove ();//удалить абонента которого удалили с формы)
+        Assert.assertEquals (after,before);
     }
 
     @DataProvider (name = "subscriberProvider")

@@ -29,6 +29,7 @@ public class SubscribersPage {
     private List<SelenideElement> genderS;
 
     private String fNameByIdXPathTempl = "/tr[td/a[text() = '%d']]/td[3]";
+    private String openSubscriberToEditById = "/tr[td/a[text() = '%d']]";
 
     public FormPage goToFormPage () {
         formLink.click();
@@ -38,6 +39,7 @@ public class SubscribersPage {
     //Может не сработать
     public EditFormPage editSubscriber (int id) {
         linkToEditForm.$(By.linkText(String.valueOf(id)));
+        //$(By.xpath ((String.format (openSubscriberToEditById, id)))).click (); - Как вариант если первая строка не сработает
         return page(EditFormPage.class);
     }
 
