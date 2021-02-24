@@ -15,31 +15,26 @@ import static com.codeborne.selenide.Selenide.page;
 public class SubscribersPage {
     @FindBy(id = "add")
     private SelenideElement formLink;
-    @FindBy(id = "contact-edit-id")
-    private SelenideElement linkToEditForm;
     @FindBy(css = "a[name='contact-edit-id']")
     private List<SelenideElement> idS;
     @FindBy(css = "tr > td:nth-child(3)")
     private List<SelenideElement> fNames;
-    @FindBy(css = "")
+    @FindBy(css = "tr > td:nth-child(4)")
     private List<SelenideElement> lNames;
-    @FindBy(css = "")
+    @FindBy(css = "tr > td:nth-child(5)")
     private List<SelenideElement> ageS;
-    @FindBy(css = "")
+    @FindBy(css = "tr > td:nth-child(6)")
     private List<SelenideElement> genderS;
 
     private String fNameByIdXPathTempl = "/tr[td/a[text() = '%d']]/td[3]";
-    private String openSubscriberToEditById = "/tr[td/a[text() = '%d']]";
 
     public FormPage goToFormPage () {
         formLink.click();
         return page(FormPage.class);
     }
 
-    //Может не сработать
     public EditFormPage editSubscriber (int id) {
-        linkToEditForm.$(By.linkText(String.valueOf(id)));
-        //$(By.xpath ((String.format (openSubscriberToEditById, id)))).click (); - Как вариант если первая строка не сработает
+        $(By.linkText ((String.format ("%d", id)))).click ();
         return page(EditFormPage.class);
     }
 
@@ -52,6 +47,7 @@ public class SubscribersPage {
             subscriber.setLastName (lNames.get(i).text().trim());
             subscriber.setAge(Integer.parseInt (ageS.get(i).text().trim()));
             subscriber.setGender (Gender.parseGender (genderS.get(i).text().trim()));
+            subscribers.add(subscriber);
         }
         return subscribers;
     }

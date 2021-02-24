@@ -29,10 +29,10 @@ public class FormPage {
     }
     public FormPage selectGender (String gender) {
         switch (gender) {
-            case "Female":
+            case "ж":
                 radioFemale.click();
                 break;
-            case "Male":
+            case "м":
                 radioMale.click();
                 break;
         }
