@@ -26,6 +26,7 @@ public class SelenideTests {
 
     @BeforeClass
     public void beforeClass() {
+        System.setProperty("webdriver.chrome.driver", "D:/Testing/TelesensAcademy/java-maven/drivers/chromedriver.exe");
         Configuration.browser = "chrome";
         Configuration.timeout = 10;
         Configuration.startMaximized = true;
