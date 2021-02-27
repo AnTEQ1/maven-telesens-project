@@ -26,6 +26,17 @@ public class SubscribersPage {
     @FindBy(css = "tr > td:nth-child(6)")
     private List<SelenideElement> genderS;
 
+    @FindBy(css="body > div > div:nth-child(4) > div > table > tbody > tr:last-child > td:nth-child(2)")
+    private SelenideElement lastId;
+    @FindBy(css="body > div > div:nth-child(4) > div > table > tbody > tr:last-child > td:nth-child(3)")
+    private SelenideElement lastFName;
+    @FindBy(css="body > div > div:nth-child(4) > div > table > tbody > tr:last-child > td:nth-child(4)")
+    private SelenideElement lastLName;
+    @FindBy(css="body > div > div:nth-child(4) > div > table > tbody > tr:last-child > td:nth-child(5)")
+    private SelenideElement lastAge;
+    @FindBy(css="body > div > div:nth-child(4) > div > table > tbody > tr:last-child > td:nth-child(6)")
+    private SelenideElement lastGender;
+
     private String fNameByIdXPathTempl = "/tr[td/a[text() = '%d']]/td[3]";
 
     public FormPage goToFormPage () {
@@ -61,12 +72,11 @@ public class SubscribersPage {
 
     public Subscriber getLastSubscriber() {
         Subscriber subscriber = new Subscriber();
-        int position = idS.size()-1;
-        subscriber.setId(Integer.parseInt(idS.get(position).getText().trim()));
-        subscriber.setFirstName(fNames.get(position).text().trim());
-        subscriber.setLastName (lNames.get(position).text().trim());
-        subscriber.setAge(Integer.parseInt (ageS.get(position).text().trim()));
-        subscriber.setGender (Gender.parseGender (genderS.get(position).text().trim()));
+        subscriber.setId(Integer.parseInt(lastId.text().trim()));
+        subscriber.setFirstName(lastFName.text().trim());
+        subscriber.setLastName (lastLName.text().trim());
+        subscriber.setAge(Integer.parseInt (lastAge.text().trim()));
+        subscriber.setGender (Gender.parseGender (lastGender.text().trim()));
         return subscriber;
     }
 
