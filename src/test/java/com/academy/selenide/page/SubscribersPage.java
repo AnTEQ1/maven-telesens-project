@@ -59,4 +59,29 @@ public class SubscribersPage {
         return subscriber;
     }
 
+    public Subscriber getLastSubscriber() {
+        Subscriber subscriber = new Subscriber();
+        int position = idS.size()-1;
+        subscriber.setId(Integer.parseInt(idS.get(position).getText().trim()));
+        subscriber.setFirstName(fNames.get(position).text().trim());
+        subscriber.setLastName (lNames.get(position).text().trim());
+        subscriber.setAge(Integer.parseInt (ageS.get(position).text().trim()));
+        subscriber.setGender (Gender.parseGender (genderS.get(position).text().trim()));
+        return subscriber;
+    }
+
+    public List<Subscriber> editSubscriberInList(int id, String fName, String lName) {
+        int i = 0;
+        for (; i < idS.size(); i++) {
+            int subscriberId = Integer.parseInt(idS.get(i).getText().trim());
+            if (subscriberId == id){
+                break;
+            }
+        }
+        List<Subscriber> subscribers = getAllSubscribers();
+        Subscriber subscriberForEditing = subscribers.get(i);
+        subscriberForEditing.setFirstName(fName);
+        subscriberForEditing.setLastName(lName);
+        return subscribers;
+    }
 }

@@ -1,6 +1,7 @@
 package com.academy.ddt.page;
 
 import com.academy.ddt.core.BasePage;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -20,7 +21,7 @@ public class HomePage extends BasePage {
         this.driver = driver;
         this.baseUrl = baseUrl;
     }
-
+    @Step("submit")
     public HomePage goToHome() {
         LOG.debug("HomePage. goToHome {}", baseUrl);
         driver.get(baseUrl);

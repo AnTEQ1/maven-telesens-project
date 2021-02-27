@@ -1,12 +1,16 @@
 package com.academy.ddt.core;
 
 import com.academy.telesens.util.PropertyProvider;
+import io.qameta.allure.Attachment;
+import junit.framework.TestListener;
 import net.lightbody.bmp.BrowserMobProxy;
 import net.lightbody.bmp.BrowserMobProxyServer;
 import net.lightbody.bmp.client.ClientUtil;
 import net.lightbody.bmp.core.har.Har;
 import net.lightbody.bmp.core.har.HarEntry;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Proxy;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -24,6 +28,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
+@Listeners(TestListenerImpl.class)
 public class BaseTest {
     private static Logger LOG = LoggerFactory.getLogger(BaseTest.class);
     private static Logger LOG_TRAFFIC = LoggerFactory.getLogger("TRAFFIC");
@@ -96,6 +101,10 @@ public class BaseTest {
     protected void makeScreenShot() {
         eventListener.makeScreenshot(driver); // можно вызывать где нужно в тесте и делать скрин, но ноужно передать куда сохранить скрин иначе сохранит куда прописано по умолчанию
     }
+    @Attachment()
+    protected byte[] makeScreenshotForReport() {
+        return ((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES);
+    }
 
     private void initCfg() {
         logPerformance = PropertyProvider.getBoolean("log.performance");
@@ -119,7 +128,8 @@ public class BaseTest {
     private void initLogPerformance(ChromeOptions options) {
         LoggingPreferences logPrefs = new LoggingPreferences();
         logPrefs.enable(LogType.PERFORMANCE, Level.ALL);
-        options.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
+        //options.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
+        options.setCapability("goog:loggingPrefs", logPrefs);
     }
 
     private void makeLogTraffic() {

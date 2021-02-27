@@ -111,26 +111,11 @@ public class Subscriber extends Person {
         if (!(o instanceof Subscriber)) return false;
         if (!super.equals(o)) return false;
         Subscriber that = (Subscriber) o;
-        return Objects.equals(phoneNumder, that.phoneNumder) && Objects.equals(operator, that.operator);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), phoneNumder, operator);
-    }
-
-    //Сравнение по ID отключено, т.к. ID нет возможности самостоятельно указать при добавлении нового пользователя
-    /*@Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Subscriber)) return false;
-        if (!super.equals(o)) return false;
-        Subscriber that = (Subscriber) o;
         return id == that.id;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), id);
-    }*/
+    }
 }

@@ -1,6 +1,7 @@
 package com.academy.ddt.page;
 
 import com.academy.ddt.core.BasePage;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -34,12 +35,12 @@ public class LoginPage extends BasePage {
         inputField(passwordField,password);
         return this;
     }
-
+    @Step("submit")
     public LoginPage submit() {
         submitButton.click();
         return this;
     }
-
+    @Step("submit")
     public MyAccountPage submitSuccess() {
         submitButton.click();
         return new MyAccountPage(driver);
