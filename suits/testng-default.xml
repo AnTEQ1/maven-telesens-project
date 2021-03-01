@@ -13,7 +13,7 @@
         </classes>
     </test-->
     <test name="automation practice demo">
-        <parameter name="browser" value="firefox"/>
+        <!--parameter name="browser" value="firefox"/-->
         <classes>
             <!--class name="com.academy.ddt.test.AutomationPracticeTests" /-->
             <!--class name="com.academy.bdd.AuthTests" /-->
