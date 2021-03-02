@@ -15,6 +15,8 @@ import static com.codeborne.selenide.Selenide.page;
 public class SubscribersPage {
     @FindBy(id = "add")
     private SelenideElement formLink;
+    @FindBy(id = "del")
+    private SelenideElement deleteButton;
     @FindBy(css = "a[name='contact-edit-id']")
     private List<SelenideElement> idS;
     @FindBy(css = "tr > td:nth-child(3)")
@@ -38,6 +40,7 @@ public class SubscribersPage {
     private SelenideElement lastGender;
 
     private String fNameByIdXPathTempl = "/tr[td/a[text() = '%d']]/td[3]";
+    private String checkboxTempl = "//input[@type='checkbox' and @id='%d']";
 
     public FormPage goToFormPage () {
         formLink.click();
@@ -80,18 +83,31 @@ public class SubscribersPage {
         return subscriber;
     }
 
-    public List<Subscriber> editSubscriberInList(int id, String fName, String lName) {
+    public List<Subscriber> editSubscriberInList(Subscriber subscriber) {
         int i = 0;
         for (; i < idS.size(); i++) {
             int subscriberId = Integer.parseInt(idS.get(i).getText().trim());
-            if (subscriberId == id){
+            if (subscriberId == subscriber.getId()){
                 break;
             }
         }
         List<Subscriber> subscribers = getAllSubscribers();
         Subscriber subscriberForEditing = subscribers.get(i);
-        subscriberForEditing.setFirstName(fName);
-        subscriberForEditing.setLastName(lName);
+        subscriberForEditing.setFirstName(subscriber.getFirstName());
+        subscriberForEditing.setLastName(subscriber.getLastName());
+        subscriberForEditing.setAge(subscriber.getAge());
+        subscriberForEditing.setGender(subscriber.getGender());
         return subscribers;
     }
+
+    public SubscribersPage selectSubscriber (int id) {
+        $(By.xpath(String.format(checkboxTempl,id))).click();
+        return page(SubscribersPage.class);
+    }
+
+    public SubscribersPage clickDeleteButton(){
+        deleteButton.click();
+        return page(SubscribersPage.class);
+    }
+
 }

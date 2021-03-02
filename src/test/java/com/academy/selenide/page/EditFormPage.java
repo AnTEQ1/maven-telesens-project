@@ -19,7 +19,7 @@ public class EditFormPage {
     @FindBy(id = "FEMALE")
     private SelenideElement radioFemale;
     @FindBy(id = "age")
-    private SelenideElement age;
+    private SelenideElement ageField;
     @FindBy(className = "btn-success")
     private SelenideElement submitChanges;
 
@@ -31,6 +31,23 @@ public class EditFormPage {
 
     public EditFormPage fillLastNameField(String value) {
         lName.setValue(value);
+        return page(EditFormPage.class);
+    }
+
+    public EditFormPage editGender (String gender) {
+        switch (gender) {
+            case "ж":
+                radioFemale.click();
+                break;
+            case "м":
+                radioMale.click();
+                break;
+        }
+        return page(EditFormPage.class);
+    }
+
+    public EditFormPage fillAgeField (int age) {
+        ageField.setValue(String.valueOf(age));
         return page(EditFormPage.class);
     }
 

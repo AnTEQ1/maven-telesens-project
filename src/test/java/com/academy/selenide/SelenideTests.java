@@ -63,15 +63,17 @@ public class SelenideTests {
         Assert.assertEquals(after, before);
         Assert.assertEquals (after, before);
     }
-    @Test
-    public void testEditSubscriber() {
+    @Test(dataProvider = "editSubscriberProvider")
+    public void testEditSubscriber(Subscriber subscriber) {
         HomePage homePage = open (baseUrl,HomePage.class);
         SubscribersPage subscribersPage = homePage.goToSubscriber ();
-        List<Subscriber> before = subscribersPage.editSubscriberInList (10, "Edited", "Edited");
+        List<Subscriber> before = subscribersPage.editSubscriberInList (subscriber);
 
-        EditFormPage editFormPage = subscribersPage.editSubscriber(10);
-        editFormPage.fillFirstNameField("Edited");
-        editFormPage.fillLastNameField("Edited");
+        EditFormPage editFormPage = subscribersPage.editSubscriber(subscriber.getId());
+        editFormPage.fillFirstNameField(subscriber.getFirstName());
+        editFormPage.fillLastNameField(subscriber.getLastName());
+        editFormPage.editGender(subscriber.getGender().toValue());
+        editFormPage.fillAgeField(subscriber.getAge());
         subscribersPage = editFormPage.saveSubscriber();
 
         List<Subscriber> after = subscribersPage.getAllSubscribers ();
@@ -80,16 +82,17 @@ public class SelenideTests {
         Assert.assertEquals (after,before);
     }
 
-    @Test
-    /*public void testDeleteSubscriber(Subscriber subscriber) {
+    @Test(dataProvider = "subscriberProvider")
+    public void testDeleteSubscriber(Subscriber subscriber) {
         HomePage homePage = open (baseUrl,HomePage.class);
         SubscribersPage subscribersPage = homePage.goToSubscriber ();
         List<Subscriber> before = subscribersPage.getAllSubscribers ();
         List<Subscriber> after;
-        if (!before.isEmpty ()) {
-            //Удалить с формы
+        //if (!before.isEmpty ()) {
+            subscribersPage.selectSubscriber(6714);
+            subscribersPage.clickDeleteButton();
             after = subscribersPage.getAllSubscribers ();
-        } else {
+        /*} else {
             FormPage formPage = subscribersPage.goToFormPage();
             formPage.fillFirstNameField(subscriber.getFirstName ());
             formPage.fillLastNameField(subscriber.getLastName ());
@@ -99,12 +102,9 @@ public class SelenideTests {
             before = subscribersPage.getAllSubscribers ();
             //Удалить с формы
             after = subscribersPage.getAllSubscribers ();
-        }
-        before.remove ();//удалить абонента которого удалили с формы)
-        Assert.assertEquals (after,before);
+        }*/
+        Assert.assertEquals (after.size(),before.size()-1);
     }
-
-    */
 
     @DataProvider (name = "subscriberProvider")
     public Object[][] subscriberProvider() {
@@ -115,6 +115,19 @@ public class SelenideTests {
         subscriber.setGender (Gender.parseGender ("ж"));
 
         return new Object[][] {
+                {subscriber}
+        };
+    }
+    @DataProvider(name = "editSubscriberProvider")
+    public Object[][] editSubscriberProvider() {
+        Subscriber subscriber = new Subscriber();
+        subscriber.setId(10);
+        subscriber.setFirstName ("EditedFName");
+        subscriber.setLastName ("EditedLName");
+        subscriber.setAge (25);
+        subscriber.setGender (Gender.parseGender ("ж"));
+
+        return new Object[][]{
                 {subscriber}
         };
     }
